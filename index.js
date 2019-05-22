@@ -11,6 +11,7 @@ var paths = require("./paths")
 
 var chance = new Chance();
 var api = {}
+var output;
 
 for( var x = 0; x<10; x++) {
 
@@ -157,5 +158,43 @@ for (var count=0;count<20;count++){
     fileItem.isDeleted = 0
     fileItem.amID = null
     
-    console.log(fileItem)
+   // console.log(fileItem)
+    
+    output += `
+    INSERT INTO [dbo].[fileInfo]
+           ([fileName]
+           ,[path]
+           ,[containerPath]
+           ,[volumeName]
+           ,[objectTypeID]
+           ,[employeeID]
+           ,[size]
+           ,[cTime]
+           ,[mTime]
+           ,[aTime]
+           ,[modifiedDate]
+           ,[createdDate]
+           ,[metaHash]
+           ,[isDeleted]
+           ,[amID])
+     VALUES
+           ('${ fileItem.fileName }'
+           ,'${ fileItem.path }'
+           ,${ fileItem.containerPath }
+           ,'${ fileItem.volume }'
+           ,${ fileItem.ObjectTypeID }
+           ,${ fileItem.employeeID } 
+           ,'${ fileItem.size }' 
+           ,'${ fileItem.ctime }'
+           ,'${ fileItem.mtime }'
+           ,'${ fileItem.atime }'
+           ,'${ fileItem.created }'
+           ,'${ fileItem.created }'
+           ,'${ fileItem.metaHash }'
+           ,${ fileItem.isDeleted }
+           ,${ fileItem.amID })
+GO
+`
 }
+
+console.log(output)
